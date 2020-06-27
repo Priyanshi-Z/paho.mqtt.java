@@ -17,6 +17,7 @@ package org.eclipse.paho.client.mqttv3.internal.websocket;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 
@@ -217,8 +218,8 @@ public class WebSocketFrame {
 		for (int i = 0; i < this.payload.length; i++) {
 			buffer.put((byte) (this.payload[i] ^= mask[i % 4]));
 		}
-
-		buffer.flip();
+		Buffer buff = (Buffer) buffer;
+		buff.flip();
 		return buffer.array();
 	}
 
